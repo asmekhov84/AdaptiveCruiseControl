@@ -3,4 +3,3 @@
 
 ![](/Screenshots/window1.jpg)
 ![](/Screenshots/window2.jpg)
-![](/Screenshots/window3.jpg)
