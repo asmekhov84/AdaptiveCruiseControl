@@ -1,0 +1,77 @@
+[System]
+Name='acc'
+Type='sugeno'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=27
+AndMethod='prod'
+OrMethod='probor'
+ImpMethod='prod'
+AggMethod='sum'
+DefuzzMethod='wtaver'
+
+[Input1]
+Name='V2'
+Range=[70 90]
+NumMFs=3
+MF1='Vmin':'trimf',[70 70 80]
+MF2='Vcru':'trimf',[70 80 90]
+MF3='Vmax':'trimf',[80 90 90]
+
+[Input2]
+Name='A'
+Range=[-20 20]
+NumMFs=3
+MF1='D':'trapmf',[-20 -20 -0.659 0]
+MF2='F':'trimf',[-0.659 0 1.66]
+MF3='U':'trapmf',[0 1.66 20 20]
+
+[Input3]
+Name='L'
+Range=[0 10000]
+NumMFs=3
+MF1='S':'trapmf',[0 0 100 1500]
+MF2='M':'trimf',[500 1500 2500]
+MF3='B':'trapmf',[1500 3000 10000 10000]
+
+[Output1]
+Name='V1'
+Range=[0 1]
+NumMFs=7
+MF1='Vcru':'constant',[80]
+MF2='Vcrum':'constant',[77]
+MF3='Vminp':'constant',[73]
+MF4='Vmin':'constant',[70]
+MF5='Vmax':'constant',[90]
+MF6='Vmaxm':'constant',[87]
+MF7='Vcrup':'constant',[83]
+
+[Rules]
+1 1 1, 4 (1) : 1
+1 1 2, 4 (1) : 1
+1 1 3, 4 (1) : 1
+1 2 1, 3 (1) : 1
+1 2 2, 2 (1) : 1
+1 2 3, 1 (1) : 1
+1 3 1, 3 (1) : 1
+1 3 2, 6 (1) : 1
+1 3 3, 5 (1) : 1
+2 1 1, 2 (1) : 1
+2 1 2, 3 (1) : 1
+2 1 3, 4 (1) : 1
+2 2 1, 1 (1) : 1
+2 2 2, 1 (1) : 1
+2 2 3, 1 (1) : 1
+2 3 1, 7 (1) : 1
+2 3 2, 6 (1) : 1
+2 3 3, 5 (1) : 1
+3 1 1, 6 (1) : 1
+3 1 2, 3 (1) : 1
+3 1 3, 4 (1) : 1
+3 2 1, 6 (1) : 1
+3 2 2, 7 (1) : 1
+3 2 3, 1 (1) : 1
+3 3 1, 5 (1) : 1
+3 3 2, 5 (1) : 1
+3 3 3, 5 (1) : 1
