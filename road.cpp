@@ -2,8 +2,10 @@
 #include "interp.h"
 #include "dataio.h"
 #include "common.h"
-#include <fstream>
-#include <cmath>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
 #define min(a, b) a <= b ? a : b
 #define max(a, b) a >= b ? a : b
@@ -16,11 +18,11 @@ CRoadProfile::CRoadProfile(char *profileName){
 	strcpy_s(fileName, sizeof(char) * BUFSZ, "profiles\\");
 	strcat_s(fileName, sizeof(char) * BUFSZ, profileName);
 	strcat_s(fileName, sizeof(char) * BUFSZ, ".dat");
-	std::ifstream fin(fileName);
+	FILE *fin = fopen(fileName, "r");
 	N_src = ReadFromDATFile(fin, "way", S_src);
 	ReadFromDATFile(fin, "hgt", H_src);
 	ReadFromDATFile(fin, "ang", A_src);
-	fin.close();
+	fclose(fin);
 	double L_way = S_src[N_src - 1];
 	// interpolate road data on required range
 	N = int(L_way / L_SEG + 1);

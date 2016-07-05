@@ -1,5 +1,7 @@
 #include "acc.h"
 #include "fis.h"
+#include "road.h"
+#include "pic.h"
 #include "common.h"
 #include "interp.h"
 #include <windows.h>

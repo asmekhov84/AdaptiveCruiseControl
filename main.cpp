@@ -3,25 +3,15 @@
 #include "road.h"
 #include "acc.h"
 #include "occ.h"
-#include "dataio.h"
-#include "fis.h"
-#include <fstream>
-#include <iostream>
+#include <stdio.h>
 #include <windows.h>
-
-using namespace std;
-
-#define MSPERD 86400000
-#define MSPERH 3600000
-#define MSPERM 60000
-#define MSPERS 1000
 
 char *GetTimeDifference(SYSTEMTIME &t1, SYSTEMTIME &t2);
 
 void main(){
 	char profileName[BUFSZ];
-	cout << "Enter road profile name: ";
-	cin.getline(profileName, BUFSZ);
+	printf("Enter road profile name: ");
+	scanf("%s", profileName, BUFSZ);
 
 	CRoadProfile road(profileName);
 	CTruck truck1, truck2;
@@ -30,13 +20,13 @@ void main(){
 
 	double S1, S2, S_max = road.S[road.N - 1];
 	do{
-		cout << "Start position [0, " << S_max << "]: ";
-		cin >> S1;
+		printf("Start position [0, %f]: ", S_max);
+		scanf("%lf", &S1);
 	}
 	while(S1 < 0 || S1 > S_max);
 	do{
-		cout << "Finish position (" << S1 << ", " << S_max << "]: ";
-		cin >> S2;
+		printf("Finish position (%f, %f]: ", S1, S_max);
+		scanf("%lf", &S2);
 	}
 	while(S2 <= S1 || S2 > S_max);
 
@@ -101,34 +91,14 @@ void main(){
 	char *dt;
 	dt = GetTimeDifference(startTime, finishTime);
 
-	ofstream fout("acc.m");
-	WriteToMFile(fout, S, N, "S");
-	WriteToMFile(fout, H, N, "H");
-	WriteToMFile(fout, A, N, "A");
-	WriteToMFile(fout, V1, N, "V1");
-	WriteToMFile(fout, V2, N, "V2");
-	WriteToMFile(fout, F1, N, "F1");
-	WriteToMFile(fout, F2, N, "F2");
-	WriteToMFile(fout, A1, N, "beta1");
-	WriteToMFile(fout, A2, N, "beta2");
-	WriteToMFile(fout, B1, N, "B1");
-	WriteToMFile(fout, B2, N, "B2");
-	WriteToMFile(fout, G1, N, "G1");
-	WriteToMFile(fout, G2, N, "G2");
-	fout << "V1 = V1 * 3.6;" << endl
-		<< "V2 = V2 * 3.6;" << endl;
-	fout.close();
-
-	std::cout
-		<< endl
-		<< "*** RESULTS ***" << endl
-		<< "Time elapsed: " << dt << endl
-		<< "Ordinary cruise-control: " << endl
-		<< " Travel time : " << T2 << " sec" << endl
-		<< " Fuel outlay : " << truck2.F / ((N - 1) * L_SEG / 1000) * 100 << " l/100km" << endl
-		<< "Adaptive cruise-control: " << endl
-		<< " Travel time : " << T1 << " sec" << endl
-		<< " Fuel outlay : " << truck1.F / ((N - 1) * L_SEG / 1000) * 100 << " l/100km" << endl << endl;
+	printf("\n*** RESULTS ***\n");
+	printf("Time elapsed: %s\n", dt);
+	printf("Ordinary cruise-control: \n");		
+	printf(" Travel time : %lf sec\n", T2);
+	printf(" Fuel outlay : %lf l/100km\n", truck2.F / ((N - 1) * L_SEG / 1000) * 100);
+	printf("Adaptive cruise-control: \n");
+	printf(" Travel time : %lf sec\n", T1);
+	printf(" Fuel outlay : %lf l/100km\n", truck1.F / ((N - 1) * L_SEG / 1000) * 100);
 	system("pause");
 
 	delete[] dt;

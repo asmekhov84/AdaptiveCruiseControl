@@ -4,8 +4,9 @@
 #define ACC_17032013
 
 #include "truck.h"
-#include "road.h"
-#include "pic.h"
+
+class CPIController;
+class CRoadProfile;
 
 class CAdaptiveCruiseControl{
 public:

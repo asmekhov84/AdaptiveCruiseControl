@@ -1,7 +1,8 @@
 #include "fis.h"
 #include "common.h"
 #include <windows.h>
-#include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define MF_MAX_NAME_LEN 10
 #define MF_CNT 3
@@ -51,6 +52,7 @@ void CFuzzyInferenceSystem::Load(char *fileName){
 	LoadVar(fullName, "Output1", var_out);
 	// rules
 	rules = new RULE[N_rule];
+	memset(buf1, 0, BUFSZ);
 	ReadFromFISFile(fileName, "Rules", buf1);
 	pos1 = buf1;
 	for(int i(0); i < N_rule; i++){
@@ -152,14 +154,21 @@ double CFuzzyInferenceSystem::GetMFValue(MF &mf, double x){
 }
 
 void ReadFromFISFile(char *fileName, char *section, char *buf){
-	std::ifstream fin(fileName);
+	FILE *fin = fopen(fileName, "r");
 	char tmp[BUFSZ], str[BUFSZ];
 	strcpy_s(str, BUFSZ, "[");
 	strcat_s(str, BUFSZ, section);
 	strcat_s(str, BUFSZ, "]");
-	while(strcmp(tmp, str) != 0){
-		fin.getline(tmp, BUFSZ, '\n');
+	while(strncmp(tmp, str, strlen(str)) != 0){
+		fgets(tmp, BUFSZ, fin);
 	}
-	fin.getline(buf, BUFSZ, '\r');
-	fin.close();
+	char c;
+	int i(0);
+	memset(tmp, 0, BUFSZ);
+	while ((buf[i] = fgetc(fin)) > 0)
+	{
+		i++;
+	}
+	buf[i - 1] = '\0';
+	fclose(fin);
 }

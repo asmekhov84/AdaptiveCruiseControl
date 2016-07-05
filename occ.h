@@ -4,7 +4,8 @@
 #define OCC_20042013
 
 #include "truck.h"
-#include "pic.h"
+
+class CPIController;
 
 class COrdinaryCruiseControl{
 public:

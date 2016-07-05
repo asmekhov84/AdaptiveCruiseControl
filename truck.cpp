@@ -46,7 +46,7 @@ CTruck::CTruck(){
 	GetPrivateProfileStringA("transmission", "eta_T", NULL, buf, BUFSZ, fileName);
 	eta_T = atof(buf);
 	// load engine parameters
-	std::ifstream fin("engine.dat");
+	FILE *fin = fopen("engine.dat", "r");
 	MPC_trq_len = ReadFromDATFile(fin, "MPC_trq", MPC_trq);
 	MPC_spd_len = ReadFromDATFile(fin, "MPC_spd", MPC_spd);
 	ReadFromDATFile(fin, "MPC_map", MPC_map);
@@ -58,7 +58,7 @@ CTruck::CTruck(){
 	double *brk_spd, *brk_map;
 	brk_len = ReadFromDATFile(fin, "brk_spd", brk_spd);
 	ReadFromDATFile(fin, "brk_map", brk_map);
-	fin.close();
+	fclose(fin);
 	// calc. approx. polynom coeff.
 	double x1(brk_spd[0]),
 		y1(brk_map[0]),

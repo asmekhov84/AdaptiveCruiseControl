@@ -1,5 +1,6 @@
 #include "occ.h"
 #include "common.h"
+#include "pic.h"
 
 COrdinaryCruiseControl::COrdinaryCruiseControl(){
 	picA_t = new CPIController(K_P_A, K_I_A, SE_A_MAX, 0, 1);

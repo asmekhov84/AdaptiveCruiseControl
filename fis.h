@@ -27,7 +27,6 @@ private:
 	VAR *var_in, // array of input variables
 		var_out; // single output variable 
 	RULE *rules; // array of rules
-//	double *plot; // values of output variable MFs [var_out.N_mfs x N_PNT]
 	void LoadVar(char *fullName, char *app_name, VAR &var);
 	double GetMFValue(MF &mf, double x);
 public:
